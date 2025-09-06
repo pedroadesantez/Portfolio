@@ -5,12 +5,14 @@ This document outlines the comprehensive security measures implemented in this p
 ## 🛡️ Security Features Implemented
 
 ### 1. Content Security Policy (CSP)
+
 - **Strict CSP headers** configured in `next.config.js`
 - **XSS prevention** through content restrictions
 - **Script-src limitations** to prevent malicious script injection
 - **Object-src disabled** to prevent Flash/plugin vulnerabilities
 
 ### 2. Security Headers
+
 - **HTTP Strict Transport Security (HSTS)**: Forces HTTPS for 2 years
 - **X-Frame-Options**: Prevents clickjacking attacks
 - **X-Content-Type-Options**: Prevents MIME type sniffing
@@ -19,6 +21,7 @@ This document outlines the comprehensive security measures implemented in this p
 - **Permissions-Policy**: Restricts dangerous browser features
 
 ### 3. Input Validation & Sanitization
+
 - **Zod schema validation** with sanitization transforms
 - **DOMPurify integration** for XSS protection
 - **Email validation** with security checks
@@ -26,18 +29,21 @@ This document outlines the comprehensive security measures implemented in this p
 - **Dangerous character filtering**
 
 ### 4. Rate Limiting
+
 - **Client-side rate limiting** for contact form
 - **Configurable limits** via environment variables
 - **User fingerprinting** for tracking attempts
 - **Time-based lockouts** after exceeded limits
 
 ### 5. Bot Protection
+
 - **Client fingerprinting** for bot detection
 - **Rate limiting** as first line of defense
 - **Security event monitoring**
 - **Honeypot fields** (configurable)
 
 ### 6. Security Monitoring
+
 - **Security event logging** and reporting
 - **Real-time security checks**
 - **Vulnerability monitoring**
@@ -46,6 +52,7 @@ This document outlines the comprehensive security measures implemented in this p
 ## 📋 Security Checklist
 
 ### Development
+
 - [x] CSP headers configured
 - [x] Security headers implemented
 - [x] Input validation with sanitization
@@ -55,6 +62,7 @@ This document outlines the comprehensive security measures implemented in this p
 - [x] Security configuration files created
 
 ### Deployment
+
 - [ ] Configure security headers at CDN/server level
 - [ ] Set up CSP violation reporting
 - [ ] Configure rate limiting at infrastructure level
@@ -65,6 +73,7 @@ This document outlines the comprehensive security measures implemented in this p
 ## ⚙️ Configuration
 
 ### Environment Variables
+
 Copy `.env.security.example` to `.env.local` and configure:
 
 ```bash
@@ -77,9 +86,11 @@ SECURITY_TOKEN_SALT=your-random-salt-here
 ```
 
 ### CDN/Server Configuration
+
 Since this is a static site, implement headers at your CDN or server level:
 
 #### Netlify (`netlify.toml`)
+
 ```toml
 [[headers]]
   for = "/*"
@@ -93,6 +104,7 @@ Since this is a static site, implement headers at your CDN or server level:
 ```
 
 #### Vercel (`vercel.json`)
+
 ```json
 {
   "headers": [
@@ -130,11 +142,13 @@ Since this is a static site, implement headers at your CDN or server level:
 ```
 
 #### GitHub Pages (Not recommended for production due to limited security controls)
+
 Use Cloudflare or similar CDN for proper header management.
 
 ## 🔍 Security Testing
 
 ### Automated Testing
+
 ```bash
 # Run security linting
 npm run lint
@@ -150,6 +164,7 @@ npm test
 ```
 
 ### Manual Security Testing
+
 1. **CSP Testing**: Check browser console for CSP violations
 2. **Header Testing**: Use tools like SecurityHeaders.com
 3. **XSS Testing**: Try injecting scripts in forms
@@ -157,6 +172,7 @@ npm test
 5. **HTTPS Testing**: Verify all resources load over HTTPS
 
 ### Recommended Security Testing Tools
+
 - [OWASP ZAP](https://www.zaproxy.org/)
 - [Security Headers](https://securityheaders.com/)
 - [SSL Labs SSL Test](https://www.ssllabs.com/ssltest/)
@@ -165,6 +181,7 @@ npm test
 ## 🚨 Incident Response
 
 ### Security Event Monitoring
+
 Security events are automatically logged and can be configured to send alerts:
 
 ```typescript
@@ -178,6 +195,7 @@ Security events are automatically logged and can be configured to send alerts:
 ```
 
 ### Response Procedures
+
 1. **Immediate**: Block suspicious IP addresses at CDN level
 2. **Short-term**: Increase rate limiting temporarily
 3. **Long-term**: Review and update security measures
@@ -195,6 +213,7 @@ The SecurityProvider component provides real-time security monitoring:
 ## 🔄 Maintenance
 
 ### Regular Tasks
+
 - [ ] Review dependency vulnerabilities (weekly)
 - [ ] Update security headers (monthly)
 - [ ] Review security logs (daily)
@@ -202,6 +221,7 @@ The SecurityProvider component provides real-time security monitoring:
 - [ ] Update CSP policies (as needed)
 
 ### Updates
+
 - Keep dependencies updated
 - Monitor security advisories
 - Review and update security policies
@@ -210,11 +230,13 @@ The SecurityProvider component provides real-time security monitoring:
 ## 📚 Resources
 
 ### Security Standards
+
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 - [Web Security Guidelines](https://infosec.mozilla.org/guidelines/web_security)
 - [CSP Reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
 
 ### Tools
+
 - [npm audit](https://docs.npmjs.com/cli/audit)
 - [ESLint Security Plugin](https://github.com/nodesecurity/eslint-plugin-security)
 - [DOMPurify](https://github.com/cure53/DOMPurify)
@@ -232,6 +254,6 @@ The SecurityProvider component provides real-time security monitoring:
 ✅ **Bot Protection** - Advanced bot detection  
 ✅ **Security Monitoring** - Real-time threat detection  
 ✅ **Dependency Security** - Regular vulnerability audits  
-✅ **Accessibility** - WCAG 2.1 AA compliance  
+✅ **Accessibility** - WCAG 2.1 AA compliance
 
 This implementation follows industry best practices and provides enterprise-grade security for a static portfolio website.

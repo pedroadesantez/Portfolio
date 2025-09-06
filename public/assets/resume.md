@@ -1,4 +1,5 @@
 # Peter Njuguna
+
 **Software Engineer**
 
 📧 njugunap363@gmail.com | 📱 +254 791 476 355 | 📍 Kisii, Kenya  
@@ -23,18 +24,21 @@ GPA: 3.5/4.0
 
 **Full Stack Developer Intern**  
 TechStart Kenya | June 2024 - August 2024
+
 - Built responsive web applications serving 10,000+ users
 - Improved application performance by 40% through code optimization
 - Implemented automated testing increasing code coverage to 85%
 
 **Frontend Developer**  
 Digital Solutions Ltd | September 2023 - May 2024
+
 - Increased user engagement by 25% through improved UI/UX design
 - Reduced page load times by 50% through optimization techniques
 - Implemented WCAG 2.1 AA compliance across all projects
 
 **Open Source Contributor**  
 Various Projects | January 2022 - Present
+
 - Contributed to 15+ open source repositories
 - Maintained npm packages with 50,000+ monthly downloads
 
@@ -52,4 +56,4 @@ Various Projects | January 2022 - Present
 
 ---
 
-*Note: This is a placeholder resume. Please replace with your actual resume PDF.*
+_Note: This is a placeholder resume. Please replace with your actual resume PDF._

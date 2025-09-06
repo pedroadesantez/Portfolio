@@ -14,14 +14,14 @@
     "react/no-unescaped-entities": "off",
     "prefer-const": "error",
     "no-var": "error",
-    
+
     // Security rules (manual implementation)
     "no-eval": "error",
     "no-implied-eval": "error",
     "no-new-func": "error",
     "no-script-url": "error",
     "no-alert": "warn",
-    
+
     // Accessibility rules
     "jsx-a11y/alt-text": "error",
     "jsx-a11y/anchor-has-content": "error",

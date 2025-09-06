@@ -7,7 +7,7 @@ A modern, responsive portfolio website for a software developer built with Next.
 ## 🚀 Features
 
 - **🎨 Modern Design**: Futuristic glassmorphism UI with neon accents
-- **🎭 Interactive 3D Hero**: Three.js particle wave animation with mouse interaction  
+- **🎭 Interactive 3D Hero**: Three.js particle wave animation with mouse interaction
 - **📱 Fully Responsive**: Mobile-first design that works on all devices
 - **♿ Accessible**: WCAG 2.1 AA compliant with keyboard navigation
 - **⚡ High Performance**: Lighthouse scores ≥90 performance, ≥95 accessibility
@@ -20,26 +20,31 @@ A modern, responsive portfolio website for a software developer built with Next.
 ## 🛠️ Tech Stack
 
 ### Core Framework
+
 - **Next.js 14** - React framework with App Router
 - **TypeScript** - Type safety and better DX
 - **React 18** - Latest React features
 
-### Styling & Animation  
+### Styling & Animation
+
 - **Tailwind CSS** - Utility-first CSS framework
 - **Framer Motion** - Smooth animations and transitions
 - **Three.js** - 3D graphics and interactive hero section
 
 ### Forms & Validation
+
 - **React Hook Form** - Performant forms with easy validation
 - **Zod** - TypeScript-first schema validation
 - **Formspree** - Form backend service (configurable)
 
 ### Testing
+
 - **Jest** - Unit testing framework
 - **React Testing Library** - Testing utilities for React
 - **Playwright** - End-to-end testing
 
 ### Development Tools
+
 - **ESLint** - Code linting with TypeScript support
 - **Prettier** - Code formatting
 - **Lighthouse CI** - Performance monitoring
@@ -47,31 +52,37 @@ A modern, responsive portfolio website for a software developer built with Next.
 ## 📦 Installation
 
 ### Prerequisites
+
 - Node.js 18.0 or higher
 - npm, yarn, or pnpm
 
 ### Setup
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/alexmwangi/portfolio-website.git
    cd portfolio-website
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Configure environment variables** (optional)
+
    ```bash
    cp .env.example .env.local
    ```
+
    Update the following variables:
    - `FORMSPREE_ENDPOINT` - Your Formspree form endpoint
    - `NEXT_PUBLIC_SITE_URL` - Your site URL for production
 
 4. **Run the development server**
+
    ```bash
    npm run dev
    ```
@@ -82,6 +93,7 @@ A modern, responsive portfolio website for a software developer built with Next.
 ## 🔧 Available Scripts
 
 ### Development
+
 ```bash
 npm run dev          # Start development server
 npm run build        # Build for production
@@ -90,6 +102,7 @@ npm run type-check   # Run TypeScript type checking
 ```
 
 ### Code Quality
+
 ```bash
 npm run lint         # Run ESLint
 npm run lint:fix     # Fix ESLint errors automatically
@@ -98,6 +111,7 @@ npm run format:check # Check code formatting
 ```
 
 ### Testing
+
 ```bash
 npm run test         # Run unit tests
 npm run test:watch   # Run unit tests in watch mode
@@ -142,20 +156,24 @@ portfolio-website/
 ## 🎨 Customization
 
 ### 1. Update Site Data
+
 Edit `src/data/site-data.json` to customize:
+
 - Personal information (name, bio, contact details)
-- Projects and portfolio items  
+- Projects and portfolio items
 - Skills and experience
 - Education and certifications
 - Social media links
 
 ### 2. Styling & Theme
+
 - **Colors**: Modify the color palette in `tailwind.config.js`
 - **Typography**: Update fonts in `src/app/layout.tsx`
 - **Animations**: Customize animations in component files
 - **Three.js Scene**: Modify the hero scene in `src/components/HeroThree.tsx`
 
 ### 3. Content Management
+
 - **Projects**: Add project images to `public/assets/`
 - **Resume**: Replace `public/assets/resume.pdf` with your resume
 - **Images**: Update profile and project images
@@ -164,18 +182,21 @@ Edit `src/data/site-data.json` to customize:
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
+
 1. Push your code to GitHub
 2. Connect your repository to [Vercel](https://vercel.com)
 3. Set up environment variables in Vercel dashboard
 4. Deploy automatically on push to main branch
 
 ### Manual Deployment
+
 ```bash
 npm run build          # Build the application
 npm run start          # Start production server
 ```
 
 ### Environment Variables for Production
+
 ```env
 NEXT_PUBLIC_SITE_URL=https://your-domain.com
 FORMSPREE_ENDPOINT=https://formspree.io/f/YOUR_FORM_ID
@@ -187,12 +208,14 @@ VERCEL_PROJECT_ID=your_project_id
 ## 📊 Performance & Lighthouse Scores
 
 Target scores for optimal performance:
+
 - **Performance**: ≥ 90
-- **Accessibility**: ≥ 95  
+- **Accessibility**: ≥ 95
 - **Best Practices**: ≥ 90
 - **SEO**: ≥ 90
 
 ### Performance Optimization Features
+
 - Image optimization with Next.js Image component
 - Lazy loading for Three.js components
 - Code splitting and tree shaking
@@ -211,12 +234,14 @@ Target scores for optimal performance:
 ## 🧪 Testing Strategy
 
 ### Unit Tests
+
 - Component rendering and behavior
 - Form validation logic
 - Utility functions
 - Accessibility features
 
 ### End-to-End Tests
+
 - User interactions and workflows
 - Navigation and routing
 - Form submissions
@@ -224,6 +249,7 @@ Target scores for optimal performance:
 - Performance metrics
 
 ### Continuous Integration
+
 - Automated testing on pull requests
 - Lighthouse performance audits
 - Security vulnerability scanning

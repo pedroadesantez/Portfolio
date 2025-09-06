@@ -82,63 +82,66 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html 
-      lang="en" 
-      className="scroll-smooth"
-    >
-      <body 
+    <html lang="en" className="scroll-smooth">
+      <body
         className="min-h-screen bg-background text-text-primary antialiased"
         suppressHydrationWarning
       >
         {/* Skip to main content link for accessibility */}
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary-600 text-white px-4 py-2 rounded-md z-[100] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400"
+          className="sr-only z-[100] rounded-md bg-primary-600 px-4 py-2 text-white focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400"
         >
           Skip to main content
         </a>
 
         {/* Enhanced Background gradient effects */}
         <div className="fixed inset-0 -z-10">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-primary-500/15 rounded-full blur-3xl opacity-40 animate-pulse-slow"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent-400/15 rounded-full blur-3xl opacity-40 animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-r from-primary-500/10 to-accent-500/10 rounded-full blur-3xl opacity-30"></div>
-          <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-primary-400/8 rounded-full blur-2xl opacity-25 animate-pulse-slow" style={{ animationDelay: '4s' }}></div>
+          <div className="absolute left-0 top-0 h-96 w-96 animate-pulse-slow rounded-full bg-primary-500/15 opacity-40 blur-3xl"></div>
+          <div
+            className="absolute bottom-0 right-0 h-96 w-96 animate-pulse-slow rounded-full bg-accent-400/15 opacity-40 blur-3xl"
+            style={{ animationDelay: '2s' }}
+          ></div>
+          <div className="absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-gradient-to-r from-primary-500/10 to-accent-500/10 opacity-30 blur-3xl"></div>
+          <div
+            className="bg-primary-400/8 absolute right-1/4 top-1/4 h-64 w-64 animate-pulse-slow rounded-full opacity-25 blur-2xl"
+            style={{ animationDelay: '4s' }}
+          ></div>
         </div>
 
-        <main id="main-content">
-          {children}
-        </main>
+        <main id="main-content">{children}</main>
 
         {/* Structured data for SEO */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              "name": siteData.name,
-              "jobTitle": siteData.role,
-              "description": siteData.about,
-              "url": siteData.social.portfolio,
-              "email": siteData.contact.email,
-              "telephone": siteData.contact.phone,
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": siteData.contact.location,
+              '@context': 'https://schema.org',
+              '@type': 'Person',
+              name: siteData.name,
+              jobTitle: siteData.role,
+              description: siteData.about,
+              url: siteData.social.portfolio,
+              email: siteData.contact.email,
+              telephone: siteData.contact.phone,
+              address: {
+                '@type': 'PostalAddress',
+                addressLocality: siteData.contact.location,
               },
-              "sameAs": [
+              sameAs: [
                 siteData.contact.linkedin,
                 siteData.contact.github,
                 siteData.social.twitter,
               ],
-              "knowsAbout": siteData.skills.languages.map(l => l.name).concat(
-                siteData.skills.frameworks.map(f => f.name),
-                siteData.skills.tools.map(t => t.name)
-              ),
-              "alumniOf": {
-                "@type": "EducationalOrganization",
-                "name": siteData.education[0].institution,
+              knowsAbout: siteData.skills.languages
+                .map((l) => l.name)
+                .concat(
+                  siteData.skills.frameworks.map((f) => f.name),
+                  siteData.skills.tools.map((t) => t.name)
+                ),
+              alumniOf: {
+                '@type': 'EducationalOrganization',
+                name: siteData.education[0].institution,
               },
             }),
           }}

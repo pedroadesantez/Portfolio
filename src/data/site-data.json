@@ -18,7 +18,14 @@
       "title": "HarmonyBot",
       "description": "AI-powered bot that detects songs in real-time and generates complementary piano progressions using machine learning. Built with TensorFlow for audio processing and React for the interactive interface.",
       "longDescription": "HarmonyBot represents the intersection of AI and music creativity. The application uses advanced machine learning algorithms to analyze audio input, identify musical patterns, and generate harmonically compatible piano progressions in real-time. The project showcases modern web audio APIs, TensorFlow.js integration, and responsive design principles.",
-      "stack": ["Python", "Flask", "TensorFlow", "React", "TypeScript", "Web Audio API"],
+      "stack": [
+        "Python",
+        "Flask",
+        "TensorFlow",
+        "React",
+        "TypeScript",
+        "Web Audio API"
+      ],
       "image": "/assets/project-1.jpg",
       "github": "https://github.com/alexmwangi/harmonybot",
       "live": null,
@@ -30,7 +37,14 @@
       "title": "EcoTracker",
       "description": "Sustainable living companion app that helps users track their carbon footprint and suggests eco-friendly alternatives. Features gamification elements and community challenges.",
       "longDescription": "EcoTracker empowers users to make environmentally conscious decisions by providing personalized carbon footprint tracking, sustainable alternatives, and community engagement features. The app includes data visualization, achievement systems, and integration with environmental APIs.",
-      "stack": ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Chart.js", "PWA"],
+      "stack": [
+        "Next.js",
+        "TypeScript",
+        "Prisma",
+        "PostgreSQL",
+        "Chart.js",
+        "PWA"
+      ],
       "image": "/assets/project-2.jpg",
       "github": "https://github.com/alexmwangi/ecotracker",
       "live": "https://ecotracker-demo.vercel.app",
@@ -42,7 +56,14 @@
       "title": "DevFlow",
       "description": "Developer productivity tool that streamlines workflow management with integrated code review, task tracking, and team collaboration features. Built for remote development teams.",
       "longDescription": "DevFlow addresses the challenges of remote software development by providing an integrated platform for code review, task management, and team collaboration. Features include real-time collaboration, automated workflow triggers, and comprehensive analytics.",
-      "stack": ["React", "Node.js", "Socket.io", "MongoDB", "Docker", "GitHub API"],
+      "stack": [
+        "React",
+        "Node.js",
+        "Socket.io",
+        "MongoDB",
+        "Docker",
+        "GitHub API"
+      ],
       "image": "/assets/project-3.jpg",
       "github": "https://github.com/alexmwangi/devflow",
       "live": "https://devflow-app.herokuapp.com",
@@ -54,7 +75,14 @@
       "title": "FinanceAI",
       "description": "Personal finance management application with AI-powered insights and predictive analytics. Helps users make informed financial decisions through intelligent recommendations.",
       "longDescription": "FinanceAI leverages machine learning to provide personalized financial insights and recommendations. The application analyzes spending patterns, predicts future expenses, and suggests optimization strategies for better financial health.",
-      "stack": ["Vue.js", "Python", "FastAPI", "SQLAlchemy", "Pandas", "Plotly"],
+      "stack": [
+        "Vue.js",
+        "Python",
+        "FastAPI",
+        "SQLAlchemy",
+        "Pandas",
+        "Plotly"
+      ],
       "image": "/assets/project-4.jpg",
       "github": "https://github.com/alexmwangi/financeai",
       "live": null,

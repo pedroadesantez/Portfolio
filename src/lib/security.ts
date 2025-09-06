@@ -41,10 +41,10 @@ export function sanitizeHtml(dirty: string): string {
  */
 export function sanitizeInput(input: string, maxLength: number = 1000): string {
   if (!input || typeof input !== 'string') return ''
-  
+
   // Trim and limit length
   let sanitized = input.trim().slice(0, maxLength)
-  
+
   // Remove potentially dangerous characters
   sanitized = sanitized
     .replace(/[\x00-\x1F\x7F]/g, '') // Remove control characters
@@ -52,7 +52,7 @@ export function sanitizeInput(input: string, maxLength: number = 1000): string {
     .replace(/javascript:/gi, '') // Remove javascript: protocol
     .replace(/data:/gi, '') // Remove data: protocol
     .replace(/vbscript:/gi, '') // Remove vbscript: protocol
-  
+
   return sanitized
 }
 
@@ -61,10 +61,11 @@ export function sanitizeInput(input: string, maxLength: number = 1000): string {
  */
 export function validateEmail(email: string): boolean {
   if (!email || typeof email !== 'string') return false
-  
+
   // Basic email regex (RFC 5322 compliant)
-  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
-  
+  const emailRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+
   // Additional security checks
   const securityChecks = [
     email.length <= 254, // RFC limit
@@ -76,7 +77,7 @@ export function validateEmail(email: string): boolean {
     !email.toLowerCase().includes('javascript:'), // No javascript protocol
     !email.includes('data:'), // No data protocol
   ]
-  
+
   return emailRegex.test(email) && securityChecks.every(Boolean)
 }
 
@@ -92,16 +93,16 @@ export class ClientRateLimit {
   isAllowed(key: string, config: RateLimitConfig): boolean {
     const now = Date.now()
     const windowStart = now - config.windowMs
-    
+
     // Get existing attempts for this key
     const keyAttempts = this.attempts.get(key) || []
-    
+
     // Filter out old attempts outside the window
-    const recentAttempts = keyAttempts.filter(time => time > windowStart)
-    
+    const recentAttempts = keyAttempts.filter((time) => time > windowStart)
+
     // Update the attempts map
     this.attempts.set(key, recentAttempts)
-    
+
     return recentAttempts.length < config.maxAttempts
   }
 
@@ -122,8 +123,8 @@ export class ClientRateLimit {
     const now = Date.now()
     const windowStart = now - config.windowMs
     const keyAttempts = this.attempts.get(key) || []
-    const recentAttempts = keyAttempts.filter(time => time > windowStart)
-    
+    const recentAttempts = keyAttempts.filter((time) => time > windowStart)
+
     return Math.max(0, config.maxAttempts - recentAttempts.length)
   }
 
@@ -133,11 +134,11 @@ export class ClientRateLimit {
   getTimeUntilReset(key: string, config: RateLimitConfig): number {
     const keyAttempts = this.attempts.get(key) || []
     if (keyAttempts.length === 0) return 0
-    
+
     const oldestAttempt = keyAttempts[0]
     const resetTime = oldestAttempt + config.windowMs
     const now = Date.now()
-    
+
     return Math.max(0, resetTime - now)
   }
 }
@@ -148,18 +149,26 @@ export class ClientRateLimit {
 export function generateSecureToken(): string {
   if (typeof window === 'undefined') {
     // Server-side fallback
-    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+    return (
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15)
+    )
   }
 
   // Client-side: use crypto.getRandomValues if available
   if (window.crypto && window.crypto.getRandomValues) {
     const array = new Uint8Array(16)
     window.crypto.getRandomValues(array)
-    return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('')
+    return Array.from(array, (byte) => byte.toString(16).padStart(2, '0')).join(
+      ''
+    )
   }
 
   // Fallback for older browsers
-  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+  return (
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15)
+  )
 }
 
 /**
@@ -167,22 +176,22 @@ export function generateSecureToken(): string {
  */
 export function validateUrl(url: string): boolean {
   if (!url || typeof url !== 'string') return false
-  
+
   try {
     const parsedUrl = new URL(url)
-    
+
     // Only allow HTTP(S) protocols
     const allowedProtocols = ['http:', 'https:', 'mailto:']
     if (!allowedProtocols.includes(parsedUrl.protocol)) {
       return false
     }
-    
+
     // Additional security checks for HTTP(S)
     if (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') {
       // Prevent local network access
       const hostname = parsedUrl.hostname.toLowerCase()
       const localHosts = ['localhost', '127.0.0.1', '0.0.0.0', '::1']
-      const isLocalNetwork = 
+      const isLocalNetwork =
         localHosts.includes(hostname) ||
         hostname.startsWith('10.') ||
         hostname.startsWith('172.16.') ||
@@ -193,12 +202,12 @@ export function validateUrl(url: string): boolean {
         hostname.startsWith('172.30.') ||
         hostname.startsWith('172.31.') ||
         hostname.startsWith('192.168.')
-      
+
       if (isLocalNetwork && process.env.NODE_ENV === 'production') {
         return false
       }
     }
-    
+
     return true
   } catch {
     return false
@@ -224,11 +233,11 @@ export function generateNonce(): string {
  */
 export function escapeHtml(unsafe: string): string {
   return unsafe
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;")
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
 }
 
 /**
@@ -248,7 +257,7 @@ export function generateFingerprint(): string {
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
   ctx?.fillText('Security fingerprint', 10, 10)
-  
+
   const fingerprint = [
     navigator.userAgent,
     navigator.language,
@@ -261,9 +270,9 @@ export function generateFingerprint(): string {
   let hash = 0
   for (let i = 0; i < fingerprint.length; i++) {
     const char = fingerprint.charCodeAt(i)
-    hash = ((hash << 5) - hash) + char
+    hash = (hash << 5) - hash + char
     hash = hash & hash // Convert to 32bit integer
   }
-  
+
   return Math.abs(hash).toString(36)
 }

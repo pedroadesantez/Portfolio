@@ -1,114 +1,155 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
+  <head>
     <title>Generate Placeholder Images</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Placeholder Image Generator</h1>
     <p>Save each canvas as an image file in the assets folder</p>
-    
+
     <!-- Project Images -->
     <h2>Project 1 - HarmonyBot (AI/ML)</h2>
     <canvas id="project1" width="1200" height="630"></canvas>
-    
+
     <h2>Project 2 - EcoTracker (Web App)</h2>
     <canvas id="project2" width="1200" height="630"></canvas>
-    
+
     <h2>Project 3 - DevFlow (Developer Tools)</h2>
     <canvas id="project3" width="1200" height="630"></canvas>
-    
+
     <h2>Project 4 - FinanceAI (FinTech)</h2>
     <canvas id="project4" width="1200" height="630"></canvas>
-    
+
     <h2>OG Image</h2>
     <canvas id="og" width="1200" height="630"></canvas>
 
     <script>
-        function createGradient(ctx, color1, color2) {
-            const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, ctx.canvas.height);
-            gradient.addColorStop(0, color1);
-            gradient.addColorStop(1, color2);
-            return gradient;
-        }
+      function createGradient(ctx, color1, color2) {
+        const gradient = ctx.createLinearGradient(
+          0,
+          0,
+          ctx.canvas.width,
+          ctx.canvas.height
+        )
+        gradient.addColorStop(0, color1)
+        gradient.addColorStop(1, color2)
+        return gradient
+      }
 
-        function drawProjectImage(canvasId, title, subtitle, color1, color2) {
-            const canvas = document.getElementById(canvasId);
-            const ctx = canvas.getContext('2d');
-            
-            // Background gradient
-            ctx.fillStyle = createGradient(ctx, color1, color2);
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Dark overlay
-            ctx.fillStyle = 'rgba(26, 11, 46, 0.7)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Title
-            ctx.fillStyle = '#FFFFFF';
-            ctx.font = 'bold 72px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText(title, canvas.width / 2, canvas.height / 2 - 40);
-            
-            // Subtitle
-            ctx.fillStyle = '#A78BFA';
-            ctx.font = '36px Arial';
-            ctx.fillText(subtitle, canvas.width / 2, canvas.height / 2 + 40);
-            
-            // Decorative elements
-            ctx.strokeStyle = '#A78BFA';
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            ctx.moveTo(100, 100);
-            ctx.lineTo(200, 100);
-            ctx.stroke();
-            
-            ctx.beginPath();
-            ctx.moveTo(canvas.width - 200, canvas.height - 100);
-            ctx.lineTo(canvas.width - 100, canvas.height - 100);
-            ctx.stroke();
-        }
+      function drawProjectImage(canvasId, title, subtitle, color1, color2) {
+        const canvas = document.getElementById(canvasId)
+        const ctx = canvas.getContext('2d')
 
-        // Generate project images
-        drawProjectImage('project1', 'HarmonyBot', 'AI Music Generation', '#9333EA', '#7C3AED');
-        drawProjectImage('project2', 'EcoTracker', 'Sustainable Living App', '#059669', '#10B981');
-        drawProjectImage('project3', 'DevFlow', 'Developer Productivity', '#2563EB', '#3B82F6');
-        drawProjectImage('project4', 'FinanceAI', 'Smart Finance Management', '#DC2626', '#F59E0B');
-        
-        // OG Image
-        const ogCanvas = document.getElementById('og');
-        const ogCtx = ogCanvas.getContext('2d');
-        ogCtx.fillStyle = createGradient(ogCtx, '#1A0B2E', '#2D1B69');
-        ogCtx.fillRect(0, 0, ogCanvas.width, ogCanvas.height);
-        
-        ogCtx.fillStyle = '#FFFFFF';
-        ogCtx.font = 'bold 84px Arial';
-        ogCtx.textAlign = 'center';
-        ogCtx.fillText('Peter Njuguna', ogCanvas.width / 2, ogCanvas.height / 2 - 60);
-        
-        ogCtx.fillStyle = '#A78BFA';
-        ogCtx.font = '48px Arial';
-        ogCtx.fillText('Software Engineer', ogCanvas.width / 2, ogCanvas.height / 2 + 20);
-        
-        ogCtx.fillStyle = '#E0E7FF';
-        ogCtx.font = '32px Arial';
-        ogCtx.fillText('Building innovative solutions with modern tech', ogCanvas.width / 2, ogCanvas.height / 2 + 80);
-        
-        // Instructions
-        document.querySelectorAll('canvas').forEach((canvas, index) => {
-            canvas.style.border = '2px solid #A78BFA';
-            canvas.style.margin = '10px 0';
-            canvas.style.display = 'block';
-            
-            // Add download link
-            const link = document.createElement('a');
-            link.download = canvas.id + '.jpg';
-            link.href = canvas.toDataURL('image/jpeg', 0.9);
-            link.textContent = 'Download ' + canvas.id + '.jpg';
-            link.style.display = 'block';
-            link.style.margin = '10px 0';
-            link.style.color = '#A78BFA';
-            canvas.parentNode.insertBefore(link, canvas.nextSibling);
-        });
+        // Background gradient
+        ctx.fillStyle = createGradient(ctx, color1, color2)
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+        // Dark overlay
+        ctx.fillStyle = 'rgba(26, 11, 46, 0.7)'
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+        // Title
+        ctx.fillStyle = '#FFFFFF'
+        ctx.font = 'bold 72px Arial'
+        ctx.textAlign = 'center'
+        ctx.fillText(title, canvas.width / 2, canvas.height / 2 - 40)
+
+        // Subtitle
+        ctx.fillStyle = '#A78BFA'
+        ctx.font = '36px Arial'
+        ctx.fillText(subtitle, canvas.width / 2, canvas.height / 2 + 40)
+
+        // Decorative elements
+        ctx.strokeStyle = '#A78BFA'
+        ctx.lineWidth = 3
+        ctx.beginPath()
+        ctx.moveTo(100, 100)
+        ctx.lineTo(200, 100)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(canvas.width - 200, canvas.height - 100)
+        ctx.lineTo(canvas.width - 100, canvas.height - 100)
+        ctx.stroke()
+      }
+
+      // Generate project images
+      drawProjectImage(
+        'project1',
+        'HarmonyBot',
+        'AI Music Generation',
+        '#9333EA',
+        '#7C3AED'
+      )
+      drawProjectImage(
+        'project2',
+        'EcoTracker',
+        'Sustainable Living App',
+        '#059669',
+        '#10B981'
+      )
+      drawProjectImage(
+        'project3',
+        'DevFlow',
+        'Developer Productivity',
+        '#2563EB',
+        '#3B82F6'
+      )
+      drawProjectImage(
+        'project4',
+        'FinanceAI',
+        'Smart Finance Management',
+        '#DC2626',
+        '#F59E0B'
+      )
+
+      // OG Image
+      const ogCanvas = document.getElementById('og')
+      const ogCtx = ogCanvas.getContext('2d')
+      ogCtx.fillStyle = createGradient(ogCtx, '#1A0B2E', '#2D1B69')
+      ogCtx.fillRect(0, 0, ogCanvas.width, ogCanvas.height)
+
+      ogCtx.fillStyle = '#FFFFFF'
+      ogCtx.font = 'bold 84px Arial'
+      ogCtx.textAlign = 'center'
+      ogCtx.fillText(
+        'Peter Njuguna',
+        ogCanvas.width / 2,
+        ogCanvas.height / 2 - 60
+      )
+
+      ogCtx.fillStyle = '#A78BFA'
+      ogCtx.font = '48px Arial'
+      ogCtx.fillText(
+        'Software Engineer',
+        ogCanvas.width / 2,
+        ogCanvas.height / 2 + 20
+      )
+
+      ogCtx.fillStyle = '#E0E7FF'
+      ogCtx.font = '32px Arial'
+      ogCtx.fillText(
+        'Building innovative solutions with modern tech',
+        ogCanvas.width / 2,
+        ogCanvas.height / 2 + 80
+      )
+
+      // Instructions
+      document.querySelectorAll('canvas').forEach((canvas, index) => {
+        canvas.style.border = '2px solid #A78BFA'
+        canvas.style.margin = '10px 0'
+        canvas.style.display = 'block'
+
+        // Add download link
+        const link = document.createElement('a')
+        link.download = canvas.id + '.jpg'
+        link.href = canvas.toDataURL('image/jpeg', 0.9)
+        link.textContent = 'Download ' + canvas.id + '.jpg'
+        link.style.display = 'block'
+        link.style.margin = '10px 0'
+        link.style.color = '#A78BFA'
+        canvas.parentNode.insertBefore(link, canvas.nextSibling)
+      })
     </script>
-</body>
+  </body>
 </html>

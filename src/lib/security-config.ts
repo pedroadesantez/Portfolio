@@ -57,15 +57,20 @@ export function getSecurityConfig(): SecurityConfig {
     rateLimit: {
       enabled: process.env.NEXT_PUBLIC_RATE_LIMIT_ENABLED !== 'false',
       contactForm: {
-        windowMs: parseInt(process.env.NEXT_PUBLIC_RATE_LIMIT_CONTACT_FORM_WINDOW_MS || '900000'),
-        maxAttempts: parseInt(process.env.NEXT_PUBLIC_RATE_LIMIT_CONTACT_FORM_MAX_ATTEMPTS || '3'),
+        windowMs: parseInt(
+          process.env.NEXT_PUBLIC_RATE_LIMIT_CONTACT_FORM_WINDOW_MS || '900000'
+        ),
+        maxAttempts: parseInt(
+          process.env.NEXT_PUBLIC_RATE_LIMIT_CONTACT_FORM_MAX_ATTEMPTS || '3'
+        ),
       },
     },
     headers: {
       enabled: process.env.NEXT_PUBLIC_SECURITY_HEADERS_ENABLED !== 'false',
       hsts: {
         maxAge: parseInt(process.env.NEXT_PUBLIC_HSTS_MAX_AGE || '63072000'),
-        includeSubDomains: process.env.NEXT_PUBLIC_HSTS_INCLUDE_SUBDOMAINS !== 'false',
+        includeSubDomains:
+          process.env.NEXT_PUBLIC_HSTS_INCLUDE_SUBDOMAINS !== 'false',
         preload: process.env.NEXT_PUBLIC_HSTS_PRELOAD !== 'false',
       },
     },
@@ -89,7 +94,9 @@ export function getSecurityConfig(): SecurityConfig {
       securityDebug: process.env.NEXT_PUBLIC_SECURITY_DEBUG === 'true',
       bypassHttps: process.env.NEXT_PUBLIC_SECURITY_BYPASS_HTTPS === 'true',
     },
-    allowedOrigins: process.env.NEXT_PUBLIC_ALLOWED_ORIGINS?.split(',') || ['https://localhost:3000'],
+    allowedOrigins: process.env.NEXT_PUBLIC_ALLOWED_ORIGINS?.split(',') || [
+      'https://localhost:3000',
+    ],
   }
 }
 
@@ -124,8 +131,14 @@ export function validateSecurityConfig(config: SecurityConfig): string[] {
       warnings.push('localhost is in allowed origins in production')
     }
 
-    if (!process.env.SECURITY_TOKEN_SALT || process.env.SECURITY_TOKEN_SALT === 'your-random-salt-here-change-this-in-production') {
-      warnings.push('Security token salt is not configured or using default value')
+    if (
+      !process.env.SECURITY_TOKEN_SALT ||
+      process.env.SECURITY_TOKEN_SALT ===
+        'your-random-salt-here-change-this-in-production'
+    ) {
+      warnings.push(
+        'Security token salt is not configured or using default value'
+      )
     }
   }
 
@@ -181,17 +194,27 @@ export function getSecurityRecommendations(): string[] {
   }
 
   if (!config.email.serviceEnabled) {
-    recommendations.push('Configure email service for contact form functionality')
+    recommendations.push(
+      'Configure email service for contact form functionality'
+    )
   }
 
   if (config.csp.reportUri) {
     recommendations.push('Monitor CSP violation reports for security insights')
   }
 
-  recommendations.push('Regularly update dependencies to patch security vulnerabilities')
-  recommendations.push('Implement proper logging and monitoring for security events')
-  recommendations.push('Consider implementing CAPTCHA for additional bot protection')
-  recommendations.push('Regularly review and rotate security tokens and API keys')
+  recommendations.push(
+    'Regularly update dependencies to patch security vulnerabilities'
+  )
+  recommendations.push(
+    'Implement proper logging and monitoring for security events'
+  )
+  recommendations.push(
+    'Consider implementing CAPTCHA for additional bot protection'
+  )
+  recommendations.push(
+    'Regularly review and rotate security tokens and API keys'
+  )
 
   return recommendations
 }
@@ -203,11 +226,14 @@ export function isEnvironmentSecure(): boolean {
   if (typeof window === 'undefined') return true // Server-side is assumed secure
 
   const config = getSecurityConfig()
-  const isLocalhost = window.location.hostname === 'localhost' || 
-                     window.location.hostname === '127.0.0.1'
-  
+  const isLocalhost =
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1'
+
   if (process.env.NODE_ENV === 'development' && isLocalhost) {
-    return config.development.bypassHttps || window.location.protocol === 'https:'
+    return (
+      config.development.bypassHttps || window.location.protocol === 'https:'
+    )
   }
 
   return window.location.protocol === 'https:'

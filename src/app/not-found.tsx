@@ -10,40 +10,40 @@ export default function NotFound() {
   return (
     <>
       <Header />
-      <main className="min-h-screen pt-20 flex items-center justify-center">
+      <main className="flex min-h-screen items-center justify-center pt-20">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center max-w-2xl mx-auto"
+            className="mx-auto max-w-2xl text-center"
           >
             {/* 404 Animation */}
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{ 
-                type: "spring",
+              transition={{
+                type: 'spring',
                 stiffness: 200,
                 damping: 20,
-                delay: 0.2 
+                delay: 0.2,
               }}
               className="mb-8"
             >
-              <div className="text-8xl md:text-9xl font-display font-bold text-gradient mb-4">
+              <div className="text-gradient mb-4 font-display text-8xl font-bold md:text-9xl">
                 404
               </div>
               <motion.div
-                animate={{ 
+                animate={{
                   rotate: [0, 10, -10, 10, 0],
                 }}
-                transition={{ 
+                transition={{
                   duration: 2,
                   repeat: Infinity,
-                  repeatDelay: 3
+                  repeatDelay: 3,
                 }}
               >
-                <Search className="w-16 h-16 text-primary-400 mx-auto" />
+                <Search className="mx-auto h-16 w-16 text-primary-400" />
               </motion.div>
             </motion.div>
 
@@ -51,7 +51,7 @@ export default function NotFound() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-4"
+              className="mb-4 font-display text-3xl font-bold text-text-primary md:text-4xl"
             >
               Page Not Found
             </motion.h1>
@@ -60,30 +60,30 @@ export default function NotFound() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="text-text-secondary text-lg mb-8"
+              className="mb-8 text-lg text-text-secondary"
             >
-              Oops! The page you're looking for seems to have wandered off into the digital void. 
-              Let's get you back on track.
+              Oops! The page you're looking for seems to have wandered off into
+              the digital void. Let's get you back on track.
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
+              className="flex flex-col justify-center gap-4 sm:flex-row"
             >
-              <Link 
-                href="/" 
+              <Link
+                href="/"
                 className="btn-primary flex items-center justify-center space-x-2"
               >
-                <Home className="w-4 h-4" />
+                <Home className="h-4 w-4" />
                 <span>Go Home</span>
               </Link>
               <button
                 onClick={() => window.history.back()}
                 className="btn-secondary flex items-center justify-center space-x-2"
               >
-                <ArrowLeft className="w-4 h-4" />
+                <ArrowLeft className="h-4 w-4" />
                 <span>Go Back</span>
               </button>
             </motion.div>
@@ -93,10 +93,10 @@ export default function NotFound() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.1 }}
               transition={{ delay: 0.6 }}
-              className="absolute inset-0 pointer-events-none"
+              className="pointer-events-none absolute inset-0"
             >
-              <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary-500 rounded-full blur-3xl" />
-              <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-accent-500 rounded-full blur-3xl" />
+              <div className="absolute left-1/4 top-1/4 h-64 w-64 rounded-full bg-primary-500 blur-3xl" />
+              <div className="absolute bottom-1/4 right-1/4 h-64 w-64 rounded-full bg-accent-500 blur-3xl" />
             </motion.div>
           </motion.div>
         </div>

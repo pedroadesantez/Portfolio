@@ -9,7 +9,10 @@ import ProjectCard from '@/components/ProjectCard'
 import siteData from '@/data/site-data.json'
 import { cn } from '@/lib/utils'
 
-const categories = ['All', ...Array.from(new Set(siteData.projects.map(p => p.category)))]
+const categories = [
+  'All',
+  ...Array.from(new Set(siteData.projects.map((p) => p.category))),
+]
 
 export default function ProjectsPage() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -18,13 +21,17 @@ export default function ProjectsPage() {
 
   // Filter projects based on search query and category
   const filteredProjects = useMemo(() => {
-    return siteData.projects.filter(project => {
-      const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          project.stack.some(tech => tech.toLowerCase().includes(searchQuery.toLowerCase()))
-      
-      const matchesCategory = selectedCategory === 'All' || project.category === selectedCategory
-      
+    return siteData.projects.filter((project) => {
+      const matchesSearch =
+        project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.stack.some((tech) =>
+          tech.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+
+      const matchesCategory =
+        selectedCategory === 'All' || project.category === selectedCategory
+
       return matchesSearch && matchesCategory
     })
   }, [searchQuery, selectedCategory])
@@ -49,60 +56,73 @@ export default function ProjectsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-center max-w-4xl mx-auto"
+              className="mx-auto max-w-4xl text-center"
             >
-              <motion.span 
+              <motion.span
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-accent-400 font-medium mb-4 block"
+                className="mb-4 block font-medium text-accent-400"
               >
                 My Work
               </motion.span>
-              
-              <motion.h1 
+
+              <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-4xl md:text-5xl font-display font-bold text-text-primary mb-6"
+                className="mb-6 font-display text-4xl font-bold text-text-primary md:text-5xl"
               >
                 Projects & <span className="text-gradient">Portfolio</span>
               </motion.h1>
-              
-              <motion.p 
+
+              <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-text-secondary text-lg leading-relaxed max-w-2xl mx-auto mb-8"
+                className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-text-secondary"
               >
-                A collection of projects that showcase my skills in modern web development, 
-                from full-stack applications to creative experiments with emerging technologies.
+                A collection of projects that showcase my skills in modern web
+                development, from full-stack applications to creative
+                experiments with emerging technologies.
               </motion.p>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto"
+                className="mx-auto grid max-w-2xl grid-cols-2 gap-6 md:grid-cols-4"
               >
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-gradient">{siteData.projects.length}</div>
-                  <div className="text-sm text-text-secondary">Total Projects</div>
+                  <div className="text-gradient text-2xl font-bold">
+                    {siteData.projects.length}
+                  </div>
+                  <div className="text-sm text-text-secondary">
+                    Total Projects
+                  </div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-gradient">
-                    {siteData.projects.filter(p => p.featured).length}
+                  <div className="text-gradient text-2xl font-bold">
+                    {siteData.projects.filter((p) => p.featured).length}
                   </div>
                   <div className="text-sm text-text-secondary">Featured</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-gradient">
-                    {Array.from(new Set(siteData.projects.flatMap(p => p.stack))).length}
+                  <div className="text-gradient text-2xl font-bold">
+                    {
+                      Array.from(
+                        new Set(siteData.projects.flatMap((p) => p.stack))
+                      ).length
+                    }
                   </div>
-                  <div className="text-sm text-text-secondary">Technologies</div>
+                  <div className="text-sm text-text-secondary">
+                    Technologies
+                  </div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-gradient">{categories.length - 1}</div>
+                  <div className="text-gradient text-2xl font-bold">
+                    {categories.length - 1}
+                  </div>
                   <div className="text-sm text-text-secondary">Categories</div>
                 </div>
               </motion.div>
@@ -111,36 +131,36 @@ export default function ProjectsPage() {
         </section>
 
         {/* Filter & Search Section */}
-        <section className="py-8 bg-surface/30">
+        <section className="bg-surface/30 py-8">
           <div className="container">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="flex flex-col lg:flex-row gap-6 items-center justify-between"
+              className="flex flex-col items-center justify-between gap-6 lg:flex-row"
             >
               {/* Search */}
               <div className="relative w-full lg:w-96">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-secondary" />
+                <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 transform text-text-secondary" />
                 <input
                   type="text"
                   placeholder="Search projects, technologies..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-surface border border-glass-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-text-primary placeholder-text-secondary transition-colors duration-200"
+                  className="w-full rounded-lg border border-glass-border bg-surface py-3 pl-10 pr-4 text-text-primary placeholder-text-secondary transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                 />
               </div>
 
               <div className="flex items-center gap-4">
                 {/* Category Filter */}
                 <div className="flex items-center space-x-2">
-                  <Filter className="w-4 h-4 text-text-secondary" />
+                  <Filter className="h-4 w-4 text-text-secondary" />
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="px-3 py-2 bg-surface border border-glass-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-text-primary text-sm"
+                    className="rounded-lg border border-glass-border bg-surface px-3 py-2 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500"
                   >
-                    {categories.map(category => (
+                    {categories.map((category) => (
                       <option key={category} value={category}>
                         {category}
                       </option>
@@ -149,30 +169,30 @@ export default function ProjectsPage() {
                 </div>
 
                 {/* View Mode Toggle */}
-                <div className="flex items-center bg-surface border border-glass-border rounded-lg p-1">
+                <div className="flex items-center rounded-lg border border-glass-border bg-surface p-1">
                   <button
                     onClick={() => setViewMode('grid')}
                     className={cn(
-                      'p-2 rounded transition-colors duration-200',
-                      viewMode === 'grid' 
-                        ? 'bg-primary-600 text-white' 
+                      'rounded p-2 transition-colors duration-200',
+                      viewMode === 'grid'
+                        ? 'bg-primary-600 text-white'
                         : 'text-text-secondary hover:text-text-primary'
                     )}
                     aria-label="Grid view"
                   >
-                    <Grid3X3 className="w-4 h-4" />
+                    <Grid3X3 className="h-4 w-4" />
                   </button>
                   <button
                     onClick={() => setViewMode('list')}
                     className={cn(
-                      'p-2 rounded transition-colors duration-200',
-                      viewMode === 'list' 
-                        ? 'bg-primary-600 text-white' 
+                      'rounded p-2 transition-colors duration-200',
+                      viewMode === 'list'
+                        ? 'bg-primary-600 text-white'
                         : 'text-text-secondary hover:text-text-primary'
                     )}
                     aria-label="List view"
                   >
-                    <List className="w-4 h-4" />
+                    <List className="h-4 w-4" />
                   </button>
                 </div>
               </div>
@@ -186,7 +206,10 @@ export default function ProjectsPage() {
               className="mt-4 text-sm text-text-secondary"
             >
               {filteredProjects.length > 0 ? (
-                <>Showing {filteredProjects.length} of {siteData.projects.length} projects</>
+                <>
+                  Showing {filteredProjects.length} of{' '}
+                  {siteData.projects.length} projects
+                </>
               ) : (
                 <>No projects found matching your criteria</>
               )}
@@ -207,9 +230,9 @@ export default function ProjectsPage() {
                   transition={{ duration: 0.4 }}
                   className={cn(
                     'grid gap-8',
-                    viewMode === 'grid' 
-                      ? 'md:grid-cols-2 lg:grid-cols-3' 
-                      : 'grid-cols-1 max-w-4xl mx-auto'
+                    viewMode === 'grid'
+                      ? 'md:grid-cols-2 lg:grid-cols-3'
+                      : 'mx-auto max-w-4xl grid-cols-1'
                   )}
                 >
                   {sortedProjects.map((project, index) => (
@@ -220,9 +243,13 @@ export default function ProjectsPage() {
                       transition={{ duration: 0.4, delay: index * 0.1 }}
                       className={viewMode === 'list' ? 'w-full' : ''}
                     >
-                      <ProjectCard 
-                        {...project} 
-                        className={viewMode === 'list' ? 'lg:flex lg:items-center lg:space-x-6' : ''}
+                      <ProjectCard
+                        {...project}
+                        className={
+                          viewMode === 'list'
+                            ? 'lg:flex lg:items-center lg:space-x-6'
+                            : ''
+                        }
                       />
                     </motion.div>
                   ))}
@@ -232,16 +259,17 @@ export default function ProjectsPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
-                  className="text-center py-16"
+                  className="py-16 text-center"
                 >
-                  <div className="w-24 h-24 bg-surface rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Search className="w-12 h-12 text-text-secondary" />
+                  <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-surface">
+                    <Search className="h-12 w-12 text-text-secondary" />
                   </div>
-                  <h3 className="text-xl font-semibold text-text-primary mb-2">
+                  <h3 className="mb-2 text-xl font-semibold text-text-primary">
                     No Projects Found
                   </h3>
-                  <p className="text-text-secondary mb-6 max-w-md mx-auto">
-                    Try adjusting your search query or category filter to find what you're looking for.
+                  <p className="mx-auto mb-6 max-w-md text-text-secondary">
+                    Try adjusting your search query or category filter to find
+                    what you're looking for.
                   </p>
                   <button
                     onClick={() => {
@@ -265,13 +293,14 @@ export default function ProjectsPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              className="mb-16 text-center"
             >
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-4">
+              <h2 className="mb-4 font-display text-3xl font-bold text-text-primary md:text-4xl">
                 Technologies Used
               </h2>
-              <p className="text-text-secondary max-w-2xl mx-auto">
-                A comprehensive overview of the technologies and tools featured across my projects.
+              <p className="mx-auto max-w-2xl text-text-secondary">
+                A comprehensive overview of the technologies and tools featured
+                across my projects.
               </p>
             </motion.div>
 
@@ -281,10 +310,12 @@ export default function ProjectsPage() {
               viewport={{ once: true }}
               className="flex flex-wrap justify-center gap-3"
             >
-              {Array.from(new Set(siteData.projects.flatMap(p => p.stack)))
+              {Array.from(new Set(siteData.projects.flatMap((p) => p.stack)))
                 .sort()
                 .map((tech, index) => {
-                  const projectCount = siteData.projects.filter(p => p.stack.includes(tech)).length
+                  const projectCount = siteData.projects.filter((p) =>
+                    p.stack.includes(tech)
+                  ).length
                   return (
                     <motion.button
                       key={tech}
@@ -294,9 +325,9 @@ export default function ProjectsPage() {
                       transition={{ delay: index * 0.03 }}
                       whileHover={{ scale: 1.05 }}
                       onClick={() => setSearchQuery(tech)}
-                      className="px-4 py-2 bg-surface hover:bg-surface-hover border border-glass-border rounded-lg transition-all duration-200 group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+                      className="group cursor-pointer rounded-lg border border-glass-border bg-surface px-4 py-2 transition-all duration-200 hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
                     >
-                      <span className="text-text-primary font-medium group-hover:text-primary-400 transition-colors duration-200">
+                      <span className="font-medium text-text-primary transition-colors duration-200 group-hover:text-primary-400">
                         {tech}
                       </span>
                       <span className="ml-2 text-xs text-text-secondary">
@@ -316,21 +347,27 @@ export default function ProjectsPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="card max-w-4xl mx-auto text-center"
+              className="card mx-auto max-w-4xl text-center"
             >
-              <Star className="w-16 h-16 text-primary-400 mx-auto mb-6" />
-              <h2 className="text-3xl font-display font-bold text-text-primary mb-4">
+              <Star className="mx-auto mb-6 h-16 w-16 text-primary-400" />
+              <h2 className="mb-4 font-display text-3xl font-bold text-text-primary">
                 Have a Project in Mind?
               </h2>
-              <p className="text-text-secondary text-lg mb-8 max-w-2xl mx-auto">
-                I'm always excited to work on new and challenging projects. 
-                Let's discuss how we can bring your ideas to life with modern web technologies.
+              <p className="mx-auto mb-8 max-w-2xl text-lg text-text-secondary">
+                I'm always excited to work on new and challenging projects.
+                Let's discuss how we can bring your ideas to life with modern
+                web technologies.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col justify-center gap-4 sm:flex-row">
                 <a href="/contact" className="btn-primary">
                   Start a Project
                 </a>
-                <a href={siteData.contact.github} target="_blank" rel="noopener noreferrer" className="btn-secondary">
+                <a
+                  href={siteData.contact.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary"
+                >
                   View on GitHub
                 </a>
               </div>
