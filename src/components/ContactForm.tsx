@@ -1,31 +1,48 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Send, CheckCircle, AlertCircle, Loader2, Mail, User, MessageSquare } from 'lucide-react'
+import { Send, CheckCircle, AlertCircle, Loader2, Mail, User, MessageSquare, Shield } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { 
+  sanitizeInput, 
+  validateEmail, 
+  ClientRateLimit, 
+  RATE_LIMITS, 
+  generateSecureToken,
+  generateFingerprint,
+  isSecureContext 
+} from '@/lib/security'
 
-// Form validation schema
+// Enhanced form validation schema with security checks
 const contactSchema = z.object({
   name: z
     .string()
     .min(2, 'Name must be at least 2 characters')
-    .max(50, 'Name must be less than 50 characters'),
+    .max(50, 'Name must be less than 50 characters')
+    .transform(val => sanitizeInput(val, 50))
+    .refine(val => val.length >= 2, 'Name must be at least 2 characters after sanitization'),
   email: z
     .string()
     .email('Please enter a valid email address')
-    .min(1, 'Email is required'),
+    .min(1, 'Email is required')
+    .transform(val => sanitizeInput(val, 254))
+    .refine(validateEmail, 'Please enter a valid and safe email address'),
   subject: z
     .string()
     .min(5, 'Subject must be at least 5 characters')
-    .max(100, 'Subject must be less than 100 characters'),
+    .max(100, 'Subject must be less than 100 characters')
+    .transform(val => sanitizeInput(val, 100))
+    .refine(val => val.length >= 5, 'Subject must be at least 5 characters after sanitization'),
   message: z
     .string()
     .min(10, 'Message must be at least 10 characters')
-    .max(1000, 'Message must be less than 1000 characters'),
+    .max(1000, 'Message must be less than 1000 characters')
+    .transform(val => sanitizeInput(val, 1000))
+    .refine(val => val.length >= 10, 'Message must be at least 10 characters after sanitization'),
 })
 
 type ContactFormData = z.infer<typeof contactSchema>
@@ -34,9 +51,16 @@ interface ContactFormProps {
   className?: string
 }
 
+// Initialize rate limiter
+const rateLimiter = new ClientRateLimit()
+
 export default function ContactForm({ className = '' }: ContactFormProps) {
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error' | 'rate-limited'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
+  const [securityToken, setSecurityToken] = useState('')
+  const [userFingerprint, setUserFingerprint] = useState('')
+  const [isSecure, setIsSecure] = useState(false)
+  const [remainingAttempts, setRemainingAttempts] = useState<number>(RATE_LIMITS.CONTACT_FORM.maxAttempts)
 
   const {
     register,
@@ -53,9 +77,48 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
   const watchedMessage = watch('message', '')
   const messageCharCount = watchedMessage.length
 
+  // Initialize security measures
+  useEffect(() => {
+    setSecurityToken(generateSecureToken())
+    setUserFingerprint(generateFingerprint())
+    setIsSecure(isSecureContext())
+    
+    // Update remaining attempts on component mount
+    const remaining = rateLimiter.getRemainingAttempts(generateFingerprint(), RATE_LIMITS.CONTACT_FORM)
+    setRemainingAttempts(remaining)
+  }, [])
+
+  // Update remaining attempts when submit status changes
+  useEffect(() => {
+    if (submitStatus === 'rate-limited' || submitStatus === 'error') {
+      const remaining = rateLimiter.getRemainingAttempts(userFingerprint, RATE_LIMITS.CONTACT_FORM)
+      setRemainingAttempts(remaining)
+    }
+  }, [submitStatus, userFingerprint])
+
   const onSubmit = async (data: ContactFormData) => {
+    // Check rate limiting
+    const rateLimitKey = userFingerprint || 'anonymous'
+    if (!rateLimiter.isAllowed(rateLimitKey, RATE_LIMITS.CONTACT_FORM)) {
+      setSubmitStatus('rate-limited')
+      const timeUntilReset = rateLimiter.getTimeUntilReset(rateLimitKey, RATE_LIMITS.CONTACT_FORM)
+      const minutes = Math.ceil(timeUntilReset / (60 * 1000))
+      setErrorMessage(`Too many attempts. Please try again in ${minutes} minute(s).`)
+      return
+    }
+
+    // Security checks
+    if (!isSecure && process.env.NODE_ENV === 'production') {
+      setSubmitStatus('error')
+      setErrorMessage('This form requires a secure HTTPS connection.')
+      return
+    }
+
     setSubmitStatus('loading')
     setErrorMessage('')
+    
+    // Record the attempt for rate limiting
+    rateLimiter.recordAttempt(rateLimitKey)
 
     try {
       // Using mailto as a fallback - for production, integrate with:
@@ -125,6 +188,23 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
         <p className="text-text-secondary">
           Have a project in mind? I'd love to hear about it. Send me a message and let's discuss how we can bring your ideas to life.
         </p>
+        
+        {/* Security Status Indicator */}
+        <div className="flex items-center justify-center space-x-2 mt-4 text-sm">
+          <Shield className={cn(
+            "w-4 h-4",
+            isSecure ? "text-green-400" : "text-yellow-400"
+          )} />
+          <span className={cn(
+            "text-xs",
+            isSecure ? "text-green-400" : "text-yellow-400"
+          )}>
+            {isSecure ? "Secure Connection" : "Unsecure Connection"}
+          </span>
+          <span className="text-text-secondary text-xs">
+            • {remainingAttempts} attempts remaining
+          </span>
+        </div>
       </div>
 
       <AnimatePresence mode="wait">
@@ -148,6 +228,24 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
             >
               Send Another Message
             </button>
+          </motion.div>
+        ) : submitStatus === 'rate-limited' ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            className="text-center py-12"
+          >
+            <AlertCircle className="w-16 h-16 text-yellow-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-text-primary mb-2">
+              Rate Limit Exceeded
+            </h3>
+            <p className="text-text-secondary mb-6">
+              {errorMessage}
+            </p>
+            <div className="text-sm text-text-secondary">
+              This helps protect against spam and ensures quality communication.
+            </div>
           </motion.div>
         ) : (
           <motion.form
