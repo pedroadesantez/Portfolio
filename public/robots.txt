@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://alexmwangi.dev/sitemap.xml
+
+# Optimize crawl budget
+Crawl-delay: 1
+
+# Block development and testing files
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+Disallow: /test/
