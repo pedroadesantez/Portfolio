@@ -74,7 +74,7 @@ export function validateEmail(email: string): boolean {
     !email.endsWith('.'), // No trailing dot
     !email.includes('<'), // No angle brackets
     !email.includes('>'), // No angle brackets
-    !email.toLowerCase().includes('javascript:'), // No javascript protocol
+    !email.toLowerCase().includes('javascript'), // No javascript protocol
     !email.includes('data:'), // No data protocol
   ]
 

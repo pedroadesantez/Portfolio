@@ -8,7 +8,6 @@ import {
   Briefcase,
   User,
   Code,
-  Mail,
   Star,
   Users,
   Award,
@@ -19,7 +18,6 @@ import Footer from '@/components/Footer'
 import ProjectCard from '@/components/ProjectCard'
 import ContactForm from '@/components/ContactForm'
 import siteData from '@/data/site-data.json'
-import { cn } from '@/lib/utils'
 
 // Lazy load Three.js component for better initial page load
 const HeroThree = lazy(() => import('@/components/HeroThree'))

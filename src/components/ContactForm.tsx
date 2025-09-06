@@ -77,7 +77,7 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
     'idle' | 'loading' | 'success' | 'error' | 'rate-limited'
   >('idle')
   const [errorMessage, setErrorMessage] = useState('')
-  const [securityToken, setSecurityToken] = useState('')
+  const [, setSecurityToken] = useState('')
   const [userFingerprint, setUserFingerprint] = useState('')
   const [isSecure, setIsSecure] = useState(false)
   const [remainingAttempts, setRemainingAttempts] = useState<number>(

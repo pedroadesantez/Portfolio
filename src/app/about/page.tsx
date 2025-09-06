@@ -150,7 +150,7 @@ export default function AboutPage() {
                 animate="visible"
                 className="grid grid-cols-2 gap-6"
               >
-                {stats.map((stat, index) => (
+                {stats.map((stat) => (
                   <motion.div
                     key={stat.label}
                     variants={itemVariants}
@@ -214,47 +214,55 @@ export default function AboutPage() {
                       {category}
                     </h3>
                     <div className="space-y-4">
-                      {(skills as any[]).slice(0, 5).map((skill, index) => (
-                        <motion.div
-                          key={skill.name}
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{
-                            delay: categoryIndex * 0.1 + index * 0.05,
-                          }}
-                        >
-                          <div className="mb-2 flex justify-between">
-                            <span className="text-sm font-medium text-text-primary">
-                              {skill.name}
-                            </span>
-                            <span className="text-xs text-text-secondary">
-                              {skill.level}%
-                            </span>
-                          </div>
-                          <div className="h-2 w-full rounded-full bg-surface-hover">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              whileInView={{ width: `${skill.level}%` }}
-                              viewport={{ once: true }}
-                              transition={{
-                                duration: 1.5,
-                                delay: categoryIndex * 0.1 + index * 0.05,
-                                ease: 'easeOut',
-                              }}
-                              className={`h-2 rounded-full ${
-                                category === 'languages'
-                                  ? 'bg-gradient-to-r from-primary-500 to-primary-400'
-                                  : category === 'frameworks'
-                                    ? 'bg-gradient-to-r from-accent-500 to-accent-400'
-                                    : category === 'tools'
-                                      ? 'bg-gradient-to-r from-primary-500 to-accent-500'
-                                      : 'bg-gradient-to-r from-accent-500 to-primary-500'
-                              }`}
-                            />
-                          </div>
-                        </motion.div>
-                      ))}
+                      {(
+                        skills as {
+                          name: string
+                          level: number
+                          years: number
+                        }[]
+                      )
+                        .slice(0, 5)
+                        .map((skill, index) => (
+                          <motion.div
+                            key={skill.name}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{
+                              delay: categoryIndex * 0.1 + index * 0.05,
+                            }}
+                          >
+                            <div className="mb-2 flex justify-between">
+                              <span className="text-sm font-medium text-text-primary">
+                                {skill.name}
+                              </span>
+                              <span className="text-xs text-text-secondary">
+                                {skill.level}%
+                              </span>
+                            </div>
+                            <div className="h-2 w-full rounded-full bg-surface-hover">
+                              <motion.div
+                                initial={{ width: 0 }}
+                                whileInView={{ width: `${skill.level}%` }}
+                                viewport={{ once: true }}
+                                transition={{
+                                  duration: 1.5,
+                                  delay: categoryIndex * 0.1 + index * 0.05,
+                                  ease: 'easeOut',
+                                }}
+                                className={`h-2 rounded-full ${
+                                  category === 'languages'
+                                    ? 'bg-gradient-to-r from-primary-500 to-primary-400'
+                                    : category === 'frameworks'
+                                      ? 'bg-gradient-to-r from-accent-500 to-accent-400'
+                                      : category === 'tools'
+                                        ? 'bg-gradient-to-r from-primary-500 to-accent-500'
+                                        : 'bg-gradient-to-r from-accent-500 to-primary-500'
+                                }`}
+                              />
+                            </div>
+                          </motion.div>
+                        ))}
                     </div>
                   </motion.div>
                 )

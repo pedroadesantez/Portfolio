@@ -11,7 +11,6 @@ import {
   generateFingerprint,
   isSecureContext,
   ClientRateLimit,
-  RATE_LIMITS,
 } from '@/lib/security'
 
 /**
@@ -52,26 +51,12 @@ export function SecurityProvider({ children }: SecurityProviderProps) {
   const [securityEvents, setSecurityEvents] = useState<SecurityEvent[]>([])
   const [rateLimiter] = useState(() => new ClientRateLimit())
 
-  useEffect(() => {
-    // Initialize security context
-    setFingerprint(generateFingerprint())
-    setIsSecure(isSecureContext())
-
-    // Check for security violations on page load
-    checkForSecurityViolations()
-
-    // Set up periodic security checks
-    const securityCheckInterval = setInterval(checkForSecurityViolations, 30000) // Every 30 seconds
-
-    return () => clearInterval(securityCheckInterval)
-  }, [])
-
-  const checkForSecurityViolations = () => {
+  const checkForSecurityViolations = React.useCallback(() => {
     // Check for suspicious DOM modifications
     if (typeof window !== 'undefined') {
       // Check for suspicious script tags
       const suspiciousScripts = document.querySelectorAll(
-        'script[src*="data:"], script[src*="javascript:"], script[src*="vbscript:"]'
+        'script[src*="data:"], script[src^="javascript"], script[src^="vbscript"]'
       )
       if (suspiciousScripts.length > 0) {
         reportSecurityEvent({
@@ -89,7 +74,7 @@ export function SecurityProvider({ children }: SecurityProviderProps) {
         if (
           value &&
           (value.includes('<script') ||
-            value.toLowerCase().includes('javascript:') ||
+            value.toLowerCase().includes('javascript') ||
             value.includes('data:text/html') ||
             value.includes('eval(') ||
             value.includes('document.cookie'))
@@ -102,21 +87,22 @@ export function SecurityProvider({ children }: SecurityProviderProps) {
           })
         }
       })
-
-      // Check for iframe injections
-      const suspiciousIframes = document.querySelectorAll(
-        'iframe[src*="javascript:"], iframe[src*="data:"]'
-      )
-      if (suspiciousIframes.length > 0) {
-        reportSecurityEvent({
-          type: 'injection_attempt',
-          severity: 'high',
-          details: `Suspicious iframe detected: ${suspiciousIframes.length}`,
-          timestamp: new Date(),
-        })
-      }
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    // Initialize security context
+    setFingerprint(generateFingerprint())
+    setIsSecure(isSecureContext())
+
+    // Check for security violations on page load
+    checkForSecurityViolations()
+
+    // Set up periodic security checks
+    const securityCheckInterval = setInterval(checkForSecurityViolations, 30000) // Every 30 seconds
+
+    return () => clearInterval(securityCheckInterval)
+  }, [checkForSecurityViolations])
 
   const reportSecurityEvent = (event: SecurityEvent) => {
     setSecurityEvents((prev) => [...prev.slice(-99), event]) // Keep last 100 events
