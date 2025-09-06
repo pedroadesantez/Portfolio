@@ -42,3 +42,34 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: jest.fn(),
   })),
 })
+
+// Mock HTMLCanvasElement getContext
+HTMLCanvasElement.prototype.getContext = jest.fn(() => {
+  return {
+    fillText: jest.fn(),
+    measureText: jest.fn(() => ({ width: 100 })),
+  }
+})
+
+HTMLCanvasElement.prototype.toDataURL = jest.fn(
+  () => 'data:image/png;base64,mock-canvas-data'
+)
+
+// Mock window.scrollTo
+Object.defineProperty(window, 'scrollTo', {
+  value: jest.fn(),
+  writable: true,
+})
+
+// Mock getBoundingClientRect
+Element.prototype.getBoundingClientRect = jest.fn(() => ({
+  width: 100,
+  height: 100,
+  top: 0,
+  left: 0,
+  bottom: 100,
+  right: 100,
+  x: 0,
+  y: 0,
+  toJSON: jest.fn(),
+}))

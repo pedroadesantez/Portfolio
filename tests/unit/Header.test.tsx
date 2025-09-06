@@ -80,6 +80,7 @@ describe('Header Component', () => {
 
     // Check if links have proper accessibility
     const homeLinks = screen.getAllByRole('link', { name: /home/i })
+    expect(homeLinks.length).toBeGreaterThanOrEqual(1)
     expect(homeLinks[0]).toHaveAttribute('href', '/')
 
     // Check if resume link opens in new tab
@@ -103,7 +104,8 @@ describe('Header Component', () => {
   test('logo links to home page', () => {
     render(<Header />)
 
-    const logoLink = screen.getByRole('link', { name: 'Home' })
+    // Get logo link specifically by aria-label
+    const logoLink = screen.getByLabelText('Home')
     expect(logoLink).toHaveAttribute('href', '/')
   })
 })
