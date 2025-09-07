@@ -1,15 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Development-friendly configuration
+  // Security headers are relaxed for development to allow Next.js assets to load properly
+  // For production deployment, consider implementing stricter headers at the CDN/server level
   images: {
-    unoptimized: true, // Required for static export
+    unoptimized: true, // Disable for now to prevent 400 errors with placeholder images
     formats: ['image/webp', 'image/avif'],
     domains: ['localhost'],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  // Enable static generation for better performance
-  output: 'export',
-  trailingSlash: true,
-  skipTrailingSlashRedirect: true,
-  distDir: 'out',
+  // Enable static generation for pages (but keep API routes enabled)
+  // output: 'export', // Removed to enable API routes for contact form
+  trailingSlash: false, // Better for modern hosting platforms
+  // distDir: 'out', // Use default .next for API routes support
   // Optimize bundle
   swcMinify: true,
   compiler: {
@@ -23,29 +27,29 @@ const nextConfig = {
           // Apply security headers to all routes
           source: '/(.*)',
           headers: [
-            // Content Security Policy - strict policy for maximum security
+            // Content Security Policy - relaxed for development
             {
               key: 'Content-Security-Policy',
               value: [
                 "default-src 'self'",
-                "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com", // Allow inline scripts for Next.js and CDN libs
-                "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com", // Allow inline styles for styled-components and Google Fonts
+                "script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:* https://cdn.jsdelivr.net https://unpkg.com", // Allow localhost and CDN
+                "style-src 'self' 'unsafe-inline' http://localhost:* https://fonts.googleapis.com", // Allow localhost styles
                 "font-src 'self' https://fonts.gstatic.com data:",
-                "img-src 'self' data: blob: https:", // Allow images from self, data URIs, blobs, and HTTPS
+                "img-src 'self' data: blob: http://localhost:* https:", // Allow localhost images
                 "media-src 'self' data: blob:",
-                "object-src 'none'", // Prevent Flash and other plugins
-                "connect-src 'self' https:", // Allow HTTPS connections for APIs
-                "frame-src 'none'", // Prevent iframe embedding
-                "form-action 'self'", // Only allow form submissions to same origin
-                "base-uri 'self'", // Prevent base tag injection
-                'upgrade-insecure-requests', // Automatically upgrade HTTP to HTTPS
+                "object-src 'none'",
+                "connect-src 'self' http://localhost:* https:", // Allow localhost connections
+                "frame-src 'none'",
+                "form-action 'self'",
+                "base-uri 'self'",
+                // Remove upgrade-insecure-requests for development
               ].join('; '),
             },
-            // HTTP Strict Transport Security - Force HTTPS for 2 years
-            {
-              key: 'Strict-Transport-Security',
-              value: 'max-age=63072000; includeSubDomains; preload',
-            },
+            // HSTS disabled for development (localhost uses HTTP)
+            // {
+            //   key: 'Strict-Transport-Security',
+            //   value: 'max-age=63072000; includeSubDomains; preload',
+            // },
             // Prevent clickjacking attacks
             {
               key: 'X-Frame-Options',
@@ -98,21 +102,20 @@ const nextConfig = {
                 'xr-spatial-tracking=()',
               ].join(', '),
             },
-            // Prevent cross-origin information disclosure
-            {
-              key: 'Cross-Origin-Embedder-Policy',
-              value: 'require-corp',
-            },
-            // Isolate browsing context
-            {
-              key: 'Cross-Origin-Opener-Policy',
-              value: 'same-origin',
-            },
-            // Control cross-origin resource sharing
-            {
-              key: 'Cross-Origin-Resource-Policy',
-              value: 'same-origin',
-            },
+            // Relaxed cross-origin policies for development
+            // Note: These are disabled in development to allow Next.js dev server to work
+            // {
+            //   key: 'Cross-Origin-Embedder-Policy',
+            //   value: 'require-corp',
+            // },
+            // {
+            //   key: 'Cross-Origin-Opener-Policy',
+            //   value: 'same-origin',
+            // },
+            // {
+            //   key: 'Cross-Origin-Resource-Policy',
+            //   value: 'same-origin',
+            // },
             // Cache control for security
             {
               key: 'Cache-Control',

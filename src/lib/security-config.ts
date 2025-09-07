@@ -223,7 +223,9 @@ export function getSecurityRecommendations(): string[] {
  * Check if the current environment is secure
  */
 export function isEnvironmentSecure(): boolean {
-  if (typeof window === 'undefined') return true // Server-side is assumed secure
+  if (typeof window === 'undefined') {
+    return true // Server-side is assumed secure
+  }
 
   const config = getSecurityConfig()
   const isLocalhost =

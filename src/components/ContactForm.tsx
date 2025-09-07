@@ -154,53 +154,39 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
     rateLimiter.recordAttempt(rateLimitKey)
 
     try {
-      // Using mailto as a fallback - for production, integrate with:
-      // - EmailJS (free tier available): https://www.emailjs.com/
-      // - Formspree (free tier): https://formspree.io/
-      // - Netlify Forms (if hosting on Netlify)
-      // - Custom API with SendGrid/Resend
+      // Send to API endpoint
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
 
-      // For now, using a simulated submission with mailto fallback
-      // To make this work in production, replace with actual service
+      const result = await response.json()
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-
-      // For production, uncomment and configure one of these options:
-
-      // Option 1: EmailJS (recommended for static sites)
-      // await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
-      //   from_name: data.name,
-      //   from_email: data.email,
-      //   subject: data.subject,
-      //   message: data.message,
-      // }, 'YOUR_PUBLIC_KEY')
-
-      // Option 2: Formspree
-      // const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(data),
-      // })
-      // if (!response.ok) throw new Error('Failed to send')
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send message')
+      }
 
       setSubmitStatus('success')
       reset() // Reset form after successful submission
 
-      // Fallback: Open email client if form service not configured
-      if (
-        typeof window !== 'undefined' &&
-        !process.env.NEXT_PUBLIC_EMAIL_SERVICE
-      ) {
-        const mailtoLink = `mailto:njugunap363@gmail.com?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(`From: ${data.name}\nEmail: ${data.email}\n\n${data.message}`)}`
+      // If it's a fallback response (no email service configured), 
+      // still open mailto as backup
+      if (result.fallback) {
+        const mailtoLink = `mailto:pedroadesantez@gmail.com?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(`From: ${data.name}\nEmail: ${data.email}\n\n${data.message}`)}`
         window.open(mailtoLink, '_blank')
       }
     } catch (error) {
       setSubmitStatus('error')
       setErrorMessage(
-        'Failed to send message. Please try again or use the email link below.'
+        error instanceof Error ? error.message : 'Failed to send message. Please try again or use the email link below.'
       )
-      console.error('Form submission error:', error)
+      // Log error in development only
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Form submission error:', error)
+      }
     }
   }
 
@@ -504,10 +490,10 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
                 Prefer to email directly?
               </p>
               <a
-                href="mailto:njugunap363@gmail.com"
+                href="mailto:pedroadesantez@gmail.com"
                 className="rounded-md font-medium text-primary-400 transition-colors duration-200 hover:text-primary-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
               >
-                njugunap363@gmail.com
+                pedroadesantez@gmail.com
               </a>
             </div>
           </motion.form>

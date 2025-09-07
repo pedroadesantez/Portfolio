@@ -301,7 +301,7 @@ export default function ContactPage() {
                 },
               ].map((faq, index) => (
                 <motion.div
-                  key={index}
+                  key={faq.question.slice(0, 20) || `faq-${index}`}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}

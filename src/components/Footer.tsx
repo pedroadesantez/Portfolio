@@ -6,6 +6,7 @@ import { ArrowUp, Heart, MapPin, Clock, Mail, Phone } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import siteData from '@/data/site-data.json'
 import { cn } from '@/lib/utils'
+import ClientOnly from './ClientOnly'
 
 export default function Footer() {
   const [showScrollTop, setShowScrollTop] = useState(false)
@@ -129,9 +130,13 @@ export default function Footer() {
                 </div>
                 <div className="flex items-center space-x-2">
                   <Clock className="h-4 w-4" />
-                  <span>
-                    Local time: {currentTime} ({siteData.settings.timezone})
-                  </span>
+                  <ClientOnly fallback={
+                    <span>Local time: -- ({siteData.settings.timezone})</span>
+                  }>
+                    <span>
+                      Local time: {currentTime} ({siteData.settings.timezone})
+                    </span>
+                  </ClientOnly>
                 </div>
               </div>
             </motion.div>
@@ -238,12 +243,8 @@ export default function Footer() {
             </Link>
             <button
               onClick={() => {
-                // Toggle reduced motion preference
-                const prefersReducedMotion = window.matchMedia(
-                  '(prefers-reduced-motion: reduce)'
-                ).matches
-                // This would typically connect to a settings context
-                console.log('Toggle animations:', !prefersReducedMotion)
+                // TODO: Implement animation toggle functionality
+                // This would typically connect to a settings context to toggle animations
               }}
               className="rounded-md transition-colors duration-200 hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
             >
@@ -254,23 +255,25 @@ export default function Footer() {
       </div>
 
       {/* Scroll to Top Button */}
-      <motion.button
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{
-          opacity: showScrollTop ? 1 : 0,
-          scale: showScrollTop ? 1 : 0,
-        }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={scrollToTop}
-        className={cn(
-          'fixed bottom-8 right-8 z-40 rounded-full bg-primary-600 p-3 text-white shadow-lg transition-colors duration-200 hover:bg-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400',
-          !showScrollTop && 'pointer-events-none'
-        )}
-        aria-label="Scroll to top"
-      >
-        <ArrowUp className="h-5 w-5" />
-      </motion.button>
+      <ClientOnly>
+        <motion.button
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{
+            opacity: showScrollTop ? 1 : 0,
+            scale: showScrollTop ? 1 : 0,
+          }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={scrollToTop}
+          className={cn(
+            'fixed bottom-8 right-8 z-40 rounded-full bg-primary-600 p-3 text-white shadow-lg transition-colors duration-200 hover:bg-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400',
+            !showScrollTop && 'pointer-events-none'
+          )}
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="h-5 w-5" />
+        </motion.button>
+      </ClientOnly>
     </footer>
   )
 }

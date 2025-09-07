@@ -37,7 +37,7 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
+      <section className="relative flex min-h-screen items-center justify-center overflow-hidden" suppressHydrationWarning>
         {/* Three.js Background */}
         <Suspense
           fallback={

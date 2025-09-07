@@ -2,7 +2,7 @@
 
 **Software Engineer**
 
-📧 njugunap363@gmail.com | 📱 +254 791 476 355 | 📍 Kisii, Kenya  
+📧 pedroadesantez@gmail.com | 📱 +254 791 476 355 | 📍 Kisii, Kenya  
 🔗 [GitHub](https://github.com/ps-Dev) | [LinkedIn](https://linkedin.com/in/peternjuguna)
 
 ---

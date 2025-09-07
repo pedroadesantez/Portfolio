@@ -149,7 +149,7 @@ describe('ContactForm Component', () => {
     render(<ContactForm />)
 
     // Check if alternative contact email is displayed
-    expect(screen.getByText('njugunap363@gmail.com')).toBeInTheDocument()
+    expect(screen.getByText('pedroadesantez@gmail.com')).toBeInTheDocument()
   })
 
   test('form has proper accessibility attributes', () => {

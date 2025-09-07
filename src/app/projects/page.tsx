@@ -39,8 +39,12 @@ export default function ProjectsPage() {
   // Sort projects: featured first, then by id
   const sortedProjects = useMemo(() => {
     return [...filteredProjects].sort((a, b) => {
-      if (a.featured && !b.featured) return -1
-      if (!a.featured && b.featured) return 1
+      if (a.featured && !b.featured) {
+        return -1
+      }
+      if (!a.featured && b.featured) {
+        return 1
+      }
       return a.id.localeCompare(b.id)
     })
   }, [filteredProjects])

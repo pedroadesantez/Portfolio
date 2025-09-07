@@ -117,8 +117,8 @@ export default function AboutPage() {
                   transition={{ delay: 0.4 }}
                   className="mb-8 space-y-4 text-lg leading-relaxed text-text-secondary"
                 >
-                  {siteData.bio.split('\n\n').map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
+                  {siteData.bio.split('\n\n').map((paragraph) => (
+                    <p key={`bio-paragraph-${paragraph.slice(0, 30).replace(/\s+/g, '-')}`}>{paragraph}</p>
                   ))}
                 </motion.div>
 
@@ -384,7 +384,7 @@ export default function AboutPage() {
             <div className="mx-auto max-w-4xl">
               {siteData.education.map((edu, index) => (
                 <motion.div
-                  key={index}
+                  key={edu.institution || `education-${index}`}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -437,7 +437,7 @@ export default function AboutPage() {
                           .slice(0, 3)
                           .map((achievement, achIndex) => (
                             <motion.li
-                              key={achIndex}
+                              key={`${edu.institution}-achievement-${achievement.slice(0, 20)}`}
                               initial={{ opacity: 0, x: -10 }}
                               whileInView={{ opacity: 1, x: 0 }}
                               viewport={{ once: true }}

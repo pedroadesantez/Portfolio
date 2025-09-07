@@ -61,8 +61,8 @@ A modern, responsive portfolio website for a software developer built with Next.
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/alexmwangi/portfolio-website.git
-   cd portfolio-website
+   git clone https://github.com/Dev-Ps-peter/portfolio.git
+   cd portfolio
    ```
 
 2. **Install dependencies**
@@ -278,9 +278,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-Peter Njuguna - [njugunap363@gmail.com](mailto:njugunap363@gmail.com)
+Peter Njuguna - [pedroadesantez@gmail.com](mailto:pedroadesantez@gmail.com)
 
-Project Link: [https://github.com/ps-Dev/portfolio](https://github.com/ps-Dev/portfolio)
+Project Link: [https://github.com/Dev-Ps-peter/portfolio](https://github.com/Dev-Ps-peter/portfolio)
 
 ---
 

@@ -35,7 +35,9 @@ function ParticleWave({ mouse }: ParticleWaveProps) {
   const positions = useMemo(() => generateWaveParticles(particleCount), [])
 
   useFrame((state) => {
-    if (!ref.current) return
+    if (!ref.current) {
+      return
+    }
 
     const time = state.clock.getElapsedTime()
     const points = ref.current.geometry.attributes.position
@@ -85,7 +87,9 @@ function BackgroundGeometry() {
   const meshRef = useRef<THREE.Mesh>(null)
 
   useFrame((state) => {
-    if (!meshRef.current) return
+    if (!meshRef.current) {
+      return
+    }
 
     const time = state.clock.getElapsedTime()
 

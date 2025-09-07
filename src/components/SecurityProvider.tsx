@@ -130,11 +130,21 @@ export function SecurityProvider({ children }: SecurityProviderProps) {
     let score = 100
 
     // Deduct points for security issues
-    if (!isSecure) score -= 20
-    if (securityEvents.some((e) => e.severity === 'critical')) score -= 50
-    if (securityEvents.some((e) => e.severity === 'high')) score -= 30
-    if (securityEvents.some((e) => e.severity === 'medium')) score -= 15
-    if (securityEvents.some((e) => e.severity === 'low')) score -= 5
+    if (!isSecure) {
+      score -= 20
+    }
+    if (securityEvents.some((e) => e.severity === 'critical')) {
+      score -= 50
+    }
+    if (securityEvents.some((e) => e.severity === 'high')) {
+      score -= 30
+    }
+    if (securityEvents.some((e) => e.severity === 'medium')) {
+      score -= 15
+    }
+    if (securityEvents.some((e) => e.severity === 'low')) {
+      score -= 5
+    }
 
     // Deduct points for multiple recent events
     const recentEvents = securityEvents.filter(

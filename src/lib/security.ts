@@ -40,7 +40,9 @@ export function sanitizeHtml(dirty: string): string {
  * Sanitize and validate text input
  */
 export function sanitizeInput(input: string, maxLength: number = 1000): string {
-  if (!input || typeof input !== 'string') return ''
+  if (!input || typeof input !== 'string') {
+    return ''
+  }
 
   // Trim and limit length
   let sanitized = input.trim().slice(0, maxLength)
@@ -60,7 +62,9 @@ export function sanitizeInput(input: string, maxLength: number = 1000): string {
  * Validate email format with additional security checks
  */
 export function validateEmail(email: string): boolean {
-  if (!email || typeof email !== 'string') return false
+  if (!email || typeof email !== 'string') {
+    return false
+  }
 
   // Basic email regex (RFC 5322 compliant)
   const emailRegex =
@@ -133,7 +137,9 @@ export class ClientRateLimit {
    */
   getTimeUntilReset(key: string, config: RateLimitConfig): number {
     const keyAttempts = this.attempts.get(key) || []
-    if (keyAttempts.length === 0) return 0
+    if (keyAttempts.length === 0) {
+      return 0
+    }
 
     const oldestAttempt = keyAttempts[0]
     const resetTime = oldestAttempt + config.windowMs
@@ -175,7 +181,9 @@ export function generateSecureToken(): string {
  * Validate URL to ensure it's safe
  */
 export function validateUrl(url: string): boolean {
-  if (!url || typeof url !== 'string') return false
+  if (!url || typeof url !== 'string') {
+    return false
+  }
 
   try {
     const parsedUrl = new URL(url)
@@ -244,7 +252,9 @@ export function escapeHtml(unsafe: string): string {
  * Check if running in secure context
  */
 export function isSecureContext(): boolean {
-  if (typeof window === 'undefined') return true // Assume secure on server
+  if (typeof window === 'undefined') {
+    return true // Assume secure on server
+  }
   return window.isSecureContext || window.location.protocol === 'https:'
 }
 
@@ -252,7 +262,9 @@ export function isSecureContext(): boolean {
  * Generate fingerprint for basic bot detection
  */
 export function generateFingerprint(): string {
-  if (typeof window === 'undefined') return 'server'
+  if (typeof window === 'undefined') {
+    return 'server'
+  }
 
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
