@@ -10,13 +10,16 @@ interface ClientOnlyProps {
 /**
  * ClientOnly component prevents hydration mismatches by only rendering
  * children on the client side after hydration is complete.
- * 
+ *
  * Use this for components that:
  * - Use window/document APIs
  * - Have dynamic content that differs between server and client
  * - Need to prevent SSR/hydration issues
  */
-export default function ClientOnly({ children, fallback = null }: ClientOnlyProps) {
+export default function ClientOnly({
+  children,
+  fallback = null,
+}: ClientOnlyProps) {
   const [hasMounted, setHasMounted] = useState(false)
 
   useEffect(() => {

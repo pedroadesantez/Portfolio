@@ -118,7 +118,11 @@ export default function AboutPage() {
                   className="mb-8 space-y-4 text-lg leading-relaxed text-text-secondary"
                 >
                   {siteData.bio.split('\n\n').map((paragraph) => (
-                    <p key={`bio-paragraph-${paragraph.slice(0, 30).replace(/\s+/g, '-')}`}>{paragraph}</p>
+                    <p
+                      key={`bio-paragraph-${paragraph.slice(0, 30).replace(/\s+/g, '-')}`}
+                    >
+                      {paragraph}
+                    </p>
                   ))}
                 </motion.div>
 

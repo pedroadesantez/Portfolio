@@ -35,7 +35,7 @@ function isRateLimited(ip: string): boolean {
   const maxAttempts = 3
 
   const record = submissions.get(ip)
-  
+
   if (!record || now - record.lastReset > windowMs) {
     submissions.set(ip, { count: 1, lastReset: now })
     return false
@@ -52,9 +52,10 @@ function isRateLimited(ip: string): boolean {
 export async function POST(request: NextRequest) {
   try {
     // Get client IP for rate limiting
-    const ip = request.headers.get('x-forwarded-for') || 
-               request.headers.get('x-real-ip') || 
-               'anonymous'
+    const ip =
+      request.headers.get('x-forwarded-for') ||
+      request.headers.get('x-real-ip') ||
+      'anonymous'
 
     // Check rate limiting
     if (isRateLimited(ip)) {
@@ -92,21 +93,25 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json({
         success: true,
-        message: 'Message sent successfully! I\'ll get back to you within 24 hours.',
+        message:
+          "Message sent successfully! I'll get back to you within 24 hours.",
       })
     } else {
       // Fallback: Return success but indicate configuration needed
-      console.warn('FORMSPREE_ENDPOINT not configured. Contact form submission:', {
-        name: validatedData.name,
-        email: validatedData.email,
-        subject: validatedData.subject,
-        message: validatedData.message.substring(0, 100) + '...',
-        timestamp: new Date().toISOString(),
-      })
+      console.warn(
+        'FORMSPREE_ENDPOINT not configured. Contact form submission:',
+        {
+          name: validatedData.name,
+          email: validatedData.email,
+          subject: validatedData.subject,
+          message: validatedData.message.substring(0, 100) + '...',
+          timestamp: new Date().toISOString(),
+        }
+      )
 
       return NextResponse.json({
         success: true,
-        message: 'Message received! I\'ll get back to you within 24 hours.',
+        message: "Message received! I'll get back to you within 24 hours.",
         fallback: true,
       })
     }
@@ -116,9 +121,9 @@ export async function POST(request: NextRequest) {
     // Handle validation errors
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { 
+        {
           error: 'Invalid form data',
-          details: error.errors.map(e => e.message)
+          details: error.errors.map((e) => e.message),
         },
         { status: 400 }
       )
@@ -126,7 +131,10 @@ export async function POST(request: NextRequest) {
 
     // Handle other errors
     return NextResponse.json(
-      { error: 'Failed to send message. Please try again or contact me directly.' },
+      {
+        error:
+          'Failed to send message. Please try again or contact me directly.',
+      },
       { status: 500 }
     )
   }

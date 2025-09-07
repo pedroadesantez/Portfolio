@@ -7,7 +7,7 @@ Your portfolio's contact form now has proper email integration! Here's how to co
 ✅ **API endpoint created** - `/api/contact` handles form submissions securely  
 ✅ **Form component updated** - Now sends real requests instead of simulations  
 ✅ **Validation & security** - Rate limiting, input sanitization, and error handling  
-⚠️ **Email service** - Needs configuration to send emails to your inbox  
+⚠️ **Email service** - Needs configuration to send emails to your inbox
 
 ## Quick Setup (Recommended - Formspree)
 
@@ -36,12 +36,14 @@ Your portfolio's contact form now has proper email integration! Here's how to co
 ## How It Works Now
 
 ### Without Email Service (Current Behavior):
+
 - Form validates and processes data securely
-- Shows success message to user  
+- Shows success message to user
 - Logs submission details to server console
 - Opens user's email client as fallback (mailto link)
 
 ### With Email Service (After Setup):
+
 - Form validates and processes data securely
 - Sends email directly to `pedroadesantez@gmail.com`
 - Shows success message to user
@@ -63,6 +65,7 @@ Your portfolio's contact form now has proper email integration! Here's how to co
 ## Alternative Options
 
 If you prefer not to use Formspree, you can integrate with:
+
 - **EmailJS** (client-side email service)
 - **Resend** (modern email API)
 - **SendGrid** (enterprise email service)

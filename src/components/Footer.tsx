@@ -130,9 +130,11 @@ export default function Footer() {
                 </div>
                 <div className="flex items-center space-x-2">
                   <Clock className="h-4 w-4" />
-                  <ClientOnly fallback={
-                    <span>Local time: -- ({siteData.settings.timezone})</span>
-                  }>
+                  <ClientOnly
+                    fallback={
+                      <span>Local time: -- ({siteData.settings.timezone})</span>
+                    }
+                  >
                     <span>
                       Local time: {currentTime} ({siteData.settings.timezone})
                     </span>

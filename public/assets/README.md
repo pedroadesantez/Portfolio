@@ -5,12 +5,14 @@ This directory contains placeholder files for your portfolio assets. Replace the
 ## Required Files
 
 ### Images
+
 - `avatar.png` - Your profile photo (300x300px recommended)
 - `og-image.jpg` - Social media preview image (1200x630px)
 - `project-1.jpg` through `project-4.jpg` - Project screenshots
 - `testimonial-1.jpg` and `testimonial-2.jpg` - Testimonial photos
 
-### Documents  
+### Documents
+
 - `resume.pdf` - Your resume/CV in PDF format
 
 ## Image Specifications
@@ -23,6 +25,7 @@ This directory contains placeholder files for your portfolio assets. Replace the
 ## Fallback Behavior
 
 The portfolio includes fallback handling:
+
 - Missing project images won't break the layout
 - Missing profile photos will show initials
 - Components gracefully handle missing assets

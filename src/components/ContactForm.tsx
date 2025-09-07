@@ -172,7 +172,7 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
       setSubmitStatus('success')
       reset() // Reset form after successful submission
 
-      // If it's a fallback response (no email service configured), 
+      // If it's a fallback response (no email service configured),
       // still open mailto as backup
       if (result.fallback) {
         const mailtoLink = `mailto:pedroadesantez@gmail.com?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(`From: ${data.name}\nEmail: ${data.email}\n\n${data.message}`)}`
@@ -181,7 +181,9 @@ export default function ContactForm({ className = '' }: ContactFormProps) {
     } catch (error) {
       setSubmitStatus('error')
       setErrorMessage(
-        error instanceof Error ? error.message : 'Failed to send message. Please try again or use the email link below.'
+        error instanceof Error
+          ? error.message
+          : 'Failed to send message. Please try again or use the email link below.'
       )
       // Log error in development only
       if (process.env.NODE_ENV === 'development') {

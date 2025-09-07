@@ -14,7 +14,7 @@
     "react/no-unescaped-entities": "off",
     "prefer-const": "error",
     "no-var": "error",
-    
+
     // Security rules
     "no-eval": "error",
     "no-implied-eval": "error",
@@ -22,7 +22,7 @@
     "no-script-url": "error",
     "no-alert": "warn",
     "no-console": "warn",
-    
+
     // Accessibility rules
     "jsx-a11y/alt-text": "error",
     "jsx-a11y/aria-props": "error",
@@ -32,11 +32,11 @@
     "jsx-a11y/role-supports-aria-props": "error",
     "jsx-a11y/tabindex-no-positive": "warn",
     "jsx-a11y/anchor-is-valid": "error",
-    
+
     // Performance
     "react/jsx-no-bind": "off",
     "react/no-array-index-key": "warn",
-    
+
     // Code quality
     "no-duplicate-imports": "error",
     "no-unused-expressions": "error",
@@ -59,7 +59,10 @@
       }
     },
     {
-      "files": ["src/components/ContactForm.tsx", "src/components/SecurityProvider.tsx"],
+      "files": [
+        "src/components/ContactForm.tsx",
+        "src/components/SecurityProvider.tsx"
+      ],
       "rules": {
         "no-console": "off"
       }

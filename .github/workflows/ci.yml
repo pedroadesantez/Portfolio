@@ -61,7 +61,11 @@ jobs:
         run: npm ci
 
       - name: Build application
-        run: npm run build
+        run: |
+          npm run build
+          mkdir -p out
+          cp -r .next/static out/
+          cp -r public/* out/
         env:
           NODE_ENV: production
 

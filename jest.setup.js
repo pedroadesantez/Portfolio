@@ -73,3 +73,37 @@ Element.prototype.getBoundingClientRect = jest.fn(() => ({
   y: 0,
   toJSON: jest.fn(),
 }))
+
+// Mock framer-motion
+jest.mock('framer-motion', () => ({
+  motion: {
+    div: ({ children, ...props }) => <div {...props}>{children}</div>,
+    span: ({ children, ...props }) => <span {...props}>{children}</span>,
+    p: ({ children, ...props }) => <p {...props}>{children}</p>,
+    button: ({ children, ...props }) => <button {...props}>{children}</button>,
+    form: ({ children, ...props }) => <form {...props}>{children}</form>,
+    section: ({ children, ...props }) => <section {...props}>{children}</section>,
+    nav: ({ children, ...props }) => <nav {...props}>{children}</nav>,
+    header: ({ children, ...props }) => <header {...props}>{children}</header>,
+    main: ({ children, ...props }) => <main {...props}>{children}</main>,
+    li: ({ children, ...props }) => <li {...props}>{children}</li>,
+    a: ({ children, ...props }) => <a {...props}>{children}</a>,
+  },
+  AnimatePresence: ({ children }) => <>{children}</>,
+  useAnimation: () => ({}),
+  useMotionValue: (initial) => ({ set: jest.fn(), get: () => initial }),
+  useTransform: () => ({}),
+  useSpring: () => ({}),
+  useReducedMotion: () => false,
+  useCycle: () => [0, jest.fn()],
+}))
+
+// Mock requestAnimationFrame
+global.requestAnimationFrame = jest.fn((cb) => setTimeout(cb, 0))
+global.cancelAnimationFrame = jest.fn()
+
+// Mock performance.now
+Object.defineProperty(performance, 'now', {
+  writable: true,
+  value: jest.fn(() => Date.now()),
+})
