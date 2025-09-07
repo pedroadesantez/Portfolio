@@ -10,17 +10,8 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  // Enable static generation for CI/CD deployment
-  ...(process.env.NODE_ENV === 'production' &&
-    process.env.STATIC_EXPORT && {
-      output: 'export',
-      distDir: 'out',
-      trailingSlash: true,
-    }),
-  // For development and normal production builds
-  ...(!(process.env.NODE_ENV === 'production' && process.env.STATIC_EXPORT) && {
-    trailingSlash: false, // Better for modern hosting platforms
-  }),
+  // Disable trailing slash for modern hosting platforms
+  trailingSlash: false,
   // Optimize bundle
   swcMinify: true,
   compiler: {
