@@ -12,7 +12,8 @@
       "Bash(npm run format:*)",
       "Bash(npm test)",
       "Bash(STATIC_EXPORT=true NODE_ENV=production npm run build)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []
